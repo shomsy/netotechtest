@@ -12,7 +12,7 @@ class UpdatedAt implements Filter
     /**
      * @inheritDoc
      */
-    public static function apply(Builder $builder, $value): Builder
+    public static function apply(Builder $builder, mixed $value): Builder
     {
         return $builder->whereDate('updated_at', Carbon::parse()->format($value));
 
