@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use JetBrains\PhpStorm\ArrayShape;
 
 class PostFactory extends Factory
 {
@@ -11,7 +12,7 @@ class PostFactory extends Factory
      *
      * @return array
      */
-    public function definition(): array
+    #[ArrayShape(['topic' => "string"])] public function definition(): array
     {
         return [
             'topic' => $this->faker->unique()->word()

@@ -2,20 +2,30 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
+use App\Http\Resources\CommentCollection;
 use App\Models\Comment;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
+use App\Models\SearchByFilters\FetchByFilters;
 
 class CommentController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\CommentCollection
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
-    public function index()
+    public function index(): CommentCollection
     {
-        //
+        $perPage = $this->getPerPage();
+
+        $query = FetchByFilters::apply(request(), new Comment());
+
+        $result = $query->paginate($perPage, ['*'], 'page', request('page'));
+
+        return new CommentCollection($result);
     }
 
     /**
